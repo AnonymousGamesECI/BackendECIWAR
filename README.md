@@ -105,61 +105,34 @@ Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, re
 		@Autowired
 		SimpMessagingTemplate msgt;
 	    
-		@MessageMapping("/newpoint.{numdibujo}",@DestinationVariable String numdibujo)    
-		public void handlePointEvent(Point pt) throws Exception {
+		@MessageMapping("/newpoint.{numdibujo}")    
+		public void handlePointEvent(Point pt,@DestinationVariable String numdibujo) throws Exception {
 			System.out.println("Nuevo punto recibido en el servidor!:"+pt);
 			msgt.convertAndSend("/topic/newpoint"+numdibujo, pt);
 		}
 	}
 
 	```
+
 2. Ajuste su cliente para que, en lugar de publicar los puntos en el tópico /topic/newpoint.{numdibujo}, lo haga en /app/newpoint.{numdibujo}. Ejecute de nuevo la aplicación y rectifique que funcione igual, pero ahora mostrando en el servidor los detalles de los puntos recibidos.
 
 3. Una vez rectificado el funcionamiento, se quiere aprovechar este 'interceptor' de eventos para cambiar ligeramente la funcionalidad:
 
-	1. Se va a manejar un nuevo tópico llamado '/topic/newpolygon', en donde el lugar de puntos, se recibirán listas de puntos.
-	2. El manejador de eventos de /app/newpoint, además de propagar los puntos mediante el tópico '/app/newpoints', llevará el control de últimos 4 puntos recibidos(que podrán haber sido dibujados por diferentes clientes). Cuando se completen los cuatro puntos, publicará la lista de puntos en el tópico '/topic/newpolygon'. Recuerde que esto se realizará concurrentemente, de manera que REVISE LAS POSIBLES CONDICIONES DE CARRERA!.
+	1. Se va a manejar un nuevo tópico llamado '/topic/newpolygon.{numdibujo}', en donde el lugar de puntos, se recibirán objetos javascript que tengan como propiedad un conjunto de puntos.
+	2. El manejador de eventos de /app/newpoint.{numdibujo}, además de propagar los puntos a través del tópico '/topic/newpoints', llevará el control de los puntos recibidos(que podrán haber sido dibujados por diferentes clientes). Cuando se completen tres o más puntos, publicará el polígono en el tópico '/topic/newpolygon'. Recuerde que esto se realizará concurrentemente, de manera que REVISE LAS POSIBLES CONDICIONES DE CARRERA!. También tenga en cuenta que desde el manejador de eventos del servidor se tendrán N dibujos independientes!.
+
 	3. El cliente, ahora también se suscribirá al tópico '/topic/newpolygon'. El 'callback' asociado a la recepción de eventos en el mismo debe, con los datos recibidos, dibujar un polígono, [tal como se muestran en ese ejemplo](http://www.arungudelli.com/html5/html5-canvas-polygon/).
 	4. Verifique la funcionalidad: igual a la anterior, pero ahora dibujando polígonos cada vez que se agreguen cuatro puntos.
 	
 	
+5. A partir de los diagramas dados en el archivo ASTAH incluido, haga un nuevo diagrama de actividades correspondiente a lo realizado hasta este punto, teniendo en cuenta el detalle de que ahora se tendrán tópicos dinámicos para manejar diferentes dibujos simultáneamente.
 
-## Parte IV.
-
-La aplicación antes planteada tiene un grave defecto: sólo se puede hacer un dibujo a la vez, y la colaboración está restringida a un único grupo, compuesto por TODAS las personas que usen la aplicación en cierto momento.
-
-1. A la aplicación, agregue una API REST en la que se pueda manejar el recurso 'dibujos', y que tenga como subrecurso:
-	* Los identificadores de los diferentes dibujos: /dibujos/{iddibujo}.
-	* Los colaboradores asociados a dichos dibujos: /dibujos/{iddibujo}/colaboradores
-
-
-2. Ajuste el código del servidor, de manera que en lugar de sólo procesar los mensajes enviados a '/app/newpoint', pueda manejar eventos asociados a cada dibujo en particular. Para esto, puede manejar una convención de nombres donde un sufijo permita identificar a qué dibujo va cada punto, y permita por lo tanto llevar un control adecuado de cada uno de éstos  (por ejemplo: /app/newdibujo.23232, /app/newdibujo.48482). Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, revise [la sección 26.4.9 de la documentación de Websockets en Spring](https://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html).
-
-
-
-3. Ajuste el cliente para que, en lugar de hacer automáticamente la suscripción a un determinado tópico, permita al usuario:
-	* Crear un nuevo grupo, ingresando un identificador para el mismo.
-	* Unirse al grupo recién creado, o a uno previamente registrado, indicando su nombre, realizando entonces la suscripción correspondiente.
-	
-	Igualmente, ajuste los nombres de los tópicos manejados en los clientes, de manera que se maneje la misma conveción de nombres (por ejemplo, /topic/newpolygon.223232, para indicar que el evento de creación del polígono irá sólo a los clientes que estén trabajando en el dibujo 223232).
-
-4. En cualquier momento, al realizar la consulta al recurso /dibujos/{iddibujo}/colaboradores, se debe poder identificar quienes están (o han estado) colaborando en un dibujo. OPCIONALMENTE, puede agregar un nuevo tópico dedicado al evento de 'nuevos colaboradores del dibujo {iddibujo}', suscribir a los clientes el mismo (para que actualicen un listado de colaboradores), y hacer que el API rest, cada vez que reciba una petición PUT para agregar un nuevo colaborador, notifique de esto a los interesados.
-
-5. A partir de los diagramas dados en el archivo ASTAH incluido, haga un nuevo diagrama de actividades correspondiente a lo realizado hasta este punto. Exporte este diagrama en formato PNG, e inclúyalo en su entrega con el nombre "DIAGRAMA_ACTUALIZADO.png"
-
-
-5. Haga commit de lo realizado, y agregue un TAG para demarcar el avance de la parte final.
+5. Haga commit de lo realizado.
 
 	```bash
 	git commit -m "PARTE FINAL".
 	```	
 
-
-## Opcional
-
-Igualmente puede revisar -DE FORMA OPCIONAL-:
-
-Puede ajustar su cliente para que, además de eventos de mouse, [detecte eventos de pantallas táctiles](http://www.homeandlearn.co.uk/JS/html5_canvas_touch_events.html), de manera que los clientes móviles también puedan interactuar con la aplicación!.
 
 
 ### Criterios de evaluación
@@ -170,4 +143,3 @@ Puede ajustar su cliente para que, además de eventos de mouse, [detecte eventos
 4. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos, con 2 o más dibujos simultáneamente.
 5. El API muestra los clientes que trabajan, o han trabajado en un determinado dibujo.
 4. En la implementación se tuvo en cuenta la naturaleza concurrente del ejercicio. Por ejemplo, si se mantiene el conjunto de los puntos recibidos en una colección, la misma debería ser de tipo concurrente (thread-safe).
-5. [Puntos opcionales] La aplicación acepta eventos táctiles.
