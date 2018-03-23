@@ -6,9 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"edu.eci.arsw.collabpaint"})
-public class CollabPaintApplication {
+public class ECIWarApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CollabPaintApplication.class, args);
+		SpringApplication.run(ECIWarApplication.class, args);
 	}
 }
