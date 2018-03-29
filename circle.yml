@@ -1,0 +1,13 @@
+machine:
+  java:
+    version: oraclejdk8
+
+deployment:
+  staging:
+    branch: master
+    heroku: 
+      appname: eciwarapi
+      
+test:
+  override:
+    - "true"
