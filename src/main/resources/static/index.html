@@ -1,19 +1,38 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <form action="/game.html">
-            <input type="text" value="Name" />
-            <input type="submit" value="Submit" />
-        </form>
-    </body>
+<head>
+  <meta charset="utf-8">
+
+  <title>Cocos Creator | EciWar</title>
+
+  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="full-screen" content="yes"/>
+  <meta name="screen-orientation" content="portrait"/>
+  <meta name="x5-fullscreen" content="true"/>
+  <meta name="360-fullscreen" content="true"/>
+  
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  
+  <link rel="stylesheet" type="text/css" href="style-desktop.css"/>
+</head>
+<body>
+<h1 class="header">EciWar</h1>
+
+<div id="GameDiv" style="width:1280px; height: 720px;">
+  <canvas id="GameCanvas" width="1280" height="720"></canvas>
+  <div id="splash">
+    <div class="progress-bar stripes">
+      <span style="width: 0%"></span>
+    </div>
+  </div>
+</div>
+
+<p class="footer">Created with <a href="http://cocos.com/cocoscreator" title="cocos creator">Cocos Creator</a></p>
+
+<script src="src/settings.js" charset="utf-8"></script>
+<script src="main.js" charset="utf-8"></script>
+</body>
 </html>
