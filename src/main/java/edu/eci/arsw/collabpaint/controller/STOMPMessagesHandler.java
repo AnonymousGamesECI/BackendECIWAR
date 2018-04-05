@@ -33,10 +33,6 @@ public class STOMPMessagesHandler {
         //Falta implementar
     }
     
-    @MessageMapping("/room.{roomId}/newshot")
-    public void handleRoomNewShotEvent(@DestinationVariable String roomId) throws Exception {
-        //Falta implementar
-    }
     
     @MessageMapping("/room.{roomId}/newshot")
     public void handleBulletEvent(Bullet bullet, @DestinationVariable String roomId) throws Exception{

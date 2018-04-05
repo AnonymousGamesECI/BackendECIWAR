@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.eci.arsw.msgbroker</groupId>
-    <artifactId>websockets-msbroker-example</artifactId>
+    <artifactId>eciwar-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
