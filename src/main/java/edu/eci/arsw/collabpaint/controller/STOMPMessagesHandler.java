@@ -28,8 +28,13 @@ public class STOMPMessagesHandler {
     ConcurrentMap<String,List> players = new ConcurrentHashMap<>();
     
     
-    @MessageMapping("/room.{roomId}")
-    public void handleRoomEvent(@DestinationVariable String roomId) throws Exception {
+    @MessageMapping("/room.{roomId}/movement")
+    public void handleRoomMovementEvent(@DestinationVariable String roomId) throws Exception {
+        //Falta implementar
+    }
+    
+    @MessageMapping("/room.{roomId}/newshot")
+    public void handleRoomNewShotEvent(@DestinationVariable String roomId) throws Exception {
         //Falta implementar
     }
     
