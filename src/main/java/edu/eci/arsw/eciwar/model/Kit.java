@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.collabpaint.model;
+package edu.eci.arsw.eciwar.model;
 
 /**
  *
  * @author USER
  */
-public class Bullet {
-    Player shooter;
-    int damage;
-
+public class Kit {
     
-    public Bullet(Player shooter, int damage){
-        this.shooter= shooter;
-        this.damage =damage;
-    }
 }

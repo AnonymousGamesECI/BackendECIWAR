@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.collabpaint.controller;
+package edu.eci.arsw.eciwar.controller;
 
-import edu.eci.arsw.collabpaint.model.Bullet;
-import edu.eci.arsw.collabpaint.model.Player;
+import edu.eci.arsw.eciwar.model.Bullet;
+import edu.eci.arsw.eciwar.model.Player;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.collabpaint.model;
+package edu.eci.arsw.eciwar.model;
 
 /**
  *
  * @author USER
  */
-public class Kit {
+public class GameState {
     
 }

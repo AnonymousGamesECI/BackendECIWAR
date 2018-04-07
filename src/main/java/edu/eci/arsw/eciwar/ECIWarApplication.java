@@ -1,4 +1,4 @@
-package edu.eci.arsw.collabpaint;
+package edu.eci.arsw.eciwar;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
