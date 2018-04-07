@@ -7,11 +7,13 @@ package edu.eci.arsw.eciwar.services;
 
 import edu.eci.arsw.eciwar.model.Player;
 import java.util.Set;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author USER
  */
+@Service
 public class GameServicesStub implements GameServices{
 
     @Override
