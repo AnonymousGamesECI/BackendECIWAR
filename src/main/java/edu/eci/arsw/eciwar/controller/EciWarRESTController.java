@@ -30,7 +30,7 @@ public class EciWarRESTController {
     private GameServices services;
     
     @RequestMapping(path = "/{roomId}/players",method = RequestMethod.GET)
-    public ResponseEntity<?> getRaceParticipantsNums(@PathVariable(name = "roomId") String roomId) {
+    public ResponseEntity<?> getRoomPlayers(@PathVariable(name = "roomId") String roomId) {
 
          try {
              return new ResponseEntity<>(services.getRegisteredPlayers(Integer.parseInt(roomId)),HttpStatus.ACCEPTED);
@@ -44,7 +44,7 @@ public class EciWarRESTController {
      }
     
     @RequestMapping(path = "/{roomId}/players",method = RequestMethod.PUT)
-    public ResponseEntity<?> addParticipantNum(@PathVariable(name = "roomId") String roomId,@RequestBody Player pl) {
+    public ResponseEntity<?> addPlayer(@PathVariable(name = "roomId") String roomId,@RequestBody Player pl) {
         try {
             services.registerPlayerToRoom(Integer.parseInt(roomId), pl);
                     return new ResponseEntity<>(HttpStatus.CREATED);
