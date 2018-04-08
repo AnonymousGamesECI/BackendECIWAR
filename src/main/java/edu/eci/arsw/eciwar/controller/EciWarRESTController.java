@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/rooms")
 public class EciWarRESTController {
     @Autowired
-    GameServices services;
+    private GameServices services;
     
     @RequestMapping(path = "/{roomId}/players",method = RequestMethod.GET)
     public ResponseEntity<?> getRaceParticipantsNums(@PathVariable(name = "roomId") String roomId) {

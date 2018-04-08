@@ -17,9 +17,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GameServicesStub implements GameServices{
-    ConcurrentHashMap<Integer, Set<Player>> roomsData = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Integer, Set<Player>> roomsData;
     
     public GameServicesStub(){
+        roomsData = new ConcurrentHashMap<>();
         roomsData.put(1, new ConcurrentSkipListSet<>());
     }
 

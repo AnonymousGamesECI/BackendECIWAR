@@ -10,8 +10,8 @@ package edu.eci.arsw.eciwar.model;
  * @author USER
  */
 public class Bullet {
-    Player shooter;
-    int damage;
+    private Player shooter;
+    private int damage;
 
     
     public Bullet(Player shooter, int damage){

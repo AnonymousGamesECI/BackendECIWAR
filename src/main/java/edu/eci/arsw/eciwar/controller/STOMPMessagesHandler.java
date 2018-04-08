@@ -24,8 +24,9 @@ import org.springframework.stereotype.Controller;
 public class STOMPMessagesHandler {
     
     @Autowired
-    SimpMessagingTemplate msgt;
-    ConcurrentMap<String,List> players = new ConcurrentHashMap<>();
+    private SimpMessagingTemplate msgt;
+    
+    private ConcurrentMap<String,List> players = new ConcurrentHashMap<>();
     
     
     @MessageMapping("/room.{roomId}/movement")

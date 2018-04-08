@@ -10,9 +10,9 @@ package edu.eci.arsw.eciwar.model;
  * @author USER
  */
 public class Player {
-    int id;
-    float x, y;
-    float rt;
+    private int id;
+    private float x, y;
+    private float rt;
     
     public Player(int id, float x, float y, float rt){
         this.id = id;
