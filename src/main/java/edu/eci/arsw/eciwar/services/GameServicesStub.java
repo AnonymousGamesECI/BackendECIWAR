@@ -62,10 +62,20 @@ public class GameServicesStub implements GameServices{
     
     @Override
     public void createRoom(int roomId) throws ServicesException{
-        if (!roomsData.containsKey(roomId)){
+        if (roomsData.containsKey(roomId)){
             throw new ServicesException("Room "+roomId+" already registered in the server.");
         }else{
             roomsData.put(roomId, new ConcurrentSkipListSet<>());
+        }
+    }
+    
+    @Override
+    public void removeRoom(int roomId) throws ServicesException{
+        if (!roomsData.containsKey(roomId)){
+            roomsData.remove(roomId);
+        }else{
+            roomsData.put(roomId, new ConcurrentSkipListSet<>());
+            throw new ServicesException("Room "+roomId+" not registered in the server.");
         }
     }
     
