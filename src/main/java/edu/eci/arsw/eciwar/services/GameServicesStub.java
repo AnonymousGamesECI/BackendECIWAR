@@ -60,4 +60,13 @@ public class GameServicesStub implements GameServices{
         return roomsData.get(roomId);
     }
     
+    @Override
+    public void createRoom(int roomId) throws ServicesException{
+        if (!roomsData.containsKey(roomId)){
+            throw new ServicesException("Room "+roomId+" already registered in the server.");
+        }else{
+            roomsData.put(roomId, new ConcurrentSkipListSet<>());
+        }
+    }
+    
 }

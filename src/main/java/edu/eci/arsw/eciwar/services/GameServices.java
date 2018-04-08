@@ -19,6 +19,7 @@ public interface GameServices {
     
     public Set<Player> getRegisteredPlayers(int roomId) throws ServicesException;
     
+    public void createRoom(int roomId) throws ServicesException;
     //public void registerWinner(int racenum,RaceParticipant rp) throws ServicesException;
     //public RaceParticipant getRegisteredWinner(int racenum) throws ServicesException;
 }

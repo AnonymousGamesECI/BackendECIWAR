@@ -57,4 +57,19 @@ public class EciWarRESTController {
         }
 
     }
+    
+    @RequestMapping(path = "/{roomId}",method = RequestMethod.POST)
+    public ResponseEntity<?> createNewRoom(@PathVariable(name = "roomId") String roomId) {
+        try {
+            services.createRoom(Integer.parseInt(roomId));
+                    return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (ServicesException ex) {
+            Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getLocalizedMessage(),HttpStatus.BAD_REQUEST);
+        } catch (NumberFormatException ex){
+            Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("/{roomId}/ must be an integer value.",HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
