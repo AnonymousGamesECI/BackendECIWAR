@@ -5,12 +5,16 @@
  */
 package edu.eci.arsw.eciwar.controller;
 
+import edu.eci.arsw.eciwar.model.Player;
 import edu.eci.arsw.eciwar.services.GameServices;
 import edu.eci.arsw.eciwar.services.ServicesException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,11 +35,26 @@ public class EciWarRESTController {
          try {
              return new ResponseEntity<>(services.getRegisteredPlayers(Integer.parseInt(roomId)),HttpStatus.ACCEPTED);
          } catch (ServicesException ex) {
-             //Logger.getLogger(ClicRaceRESTController.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
              return new ResponseEntity<>(ex.getLocalizedMessage(),HttpStatus.NOT_FOUND);
          } catch (NumberFormatException ex){
-             //Logger.getLogger(ClicRaceRESTController.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
              return new ResponseEntity<>("/{roomId}/ must be an integer value.",HttpStatus.BAD_REQUEST);
          }
      }
+    
+    @RequestMapping(path = "/{roomId}/players",method = RequestMethod.PUT)
+    public ResponseEntity<?> addParticipantNum(@PathVariable(name = "roomId") String roomId,@RequestBody Player pl) {
+        try {
+            services.registerPlayerToRoom(Integer.parseInt(roomId), pl);
+                    return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (ServicesException ex) {
+            Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getLocalizedMessage(),HttpStatus.BAD_REQUEST);
+        } catch (NumberFormatException ex){
+            Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("/{roomId}/ must be an integer value.",HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
