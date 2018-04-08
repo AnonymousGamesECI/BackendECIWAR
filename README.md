@@ -14,8 +14,8 @@
 ------- 
 ECIWAR es un videojuego multijugador del género top down shooter. Su principal objetivo es ser el sobreviviente final, entre los múltiples usuarios que se encuentren en cada partida, un juego que asegura diversión y acción constante.  
 
-***Vistas:***
-
+*_Vistas:_*
+------- 
 [![Heroku](https://wmpics.pics/di-NNAT.png)](https://eciwarapi.herokuapp.com/)
 
 [![CircleCI](https://circleci.com/gh/AnonymousGamesECI/BackendECIWAR.svg?style=svg)](https://circleci.com/gh/AnonymousGamesECI/BackendECIWAR)
