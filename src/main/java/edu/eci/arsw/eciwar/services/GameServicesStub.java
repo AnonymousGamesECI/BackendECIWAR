@@ -21,7 +21,7 @@ public class GameServicesStub implements GameServices{
     
     public GameServicesStub(){
         roomsData = new ConcurrentHashMap<>();
-        roomsData.put(1, new ConcurrentSkipListSet<>());
+        //roomsData.put(1, new ConcurrentSkipListSet<>());
     }
 
     @Override
@@ -72,10 +72,9 @@ public class GameServicesStub implements GameServices{
     @Override
     public void removeRoom(int roomId) throws ServicesException{
         if (!roomsData.containsKey(roomId)){
-            roomsData.remove(roomId);
+            throw new ServicesException("Room "+roomId+" not registered in the server.");          
         }else{
-            roomsData.put(roomId, new ConcurrentSkipListSet<>());
-            throw new ServicesException("Room "+roomId+" not registered in the server.");
+            roomsData.remove(roomId);
         }
     }
     

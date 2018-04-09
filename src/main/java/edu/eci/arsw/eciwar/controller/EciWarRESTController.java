@@ -8,6 +8,7 @@ package edu.eci.arsw.eciwar.controller;
 import edu.eci.arsw.eciwar.model.Player;
 import edu.eci.arsw.eciwar.services.GameServices;
 import edu.eci.arsw.eciwar.services.ServicesException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +59,11 @@ public class EciWarRESTController {
 
     }
     
-    @RequestMapping(path = "/{roomId}",method = RequestMethod.POST)
-    public ResponseEntity<?> createNewRoom(@PathVariable(name = "roomId") String roomId) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> createNewRoom(@RequestBody Map<String,String> room) {
         try {
-            services.createRoom(Integer.parseInt(roomId));
+            System.out.println(room);
+            services.createRoom(Integer.parseInt(room.get("id")));
                     return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (ServicesException ex) {
             Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
