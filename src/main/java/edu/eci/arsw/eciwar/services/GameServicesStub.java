@@ -26,6 +26,7 @@ public class GameServicesStub implements GameServices{
 
     @Override
     public void registerPlayerToRoom(int roomId, Player pl) throws ServicesException {
+        System.out.println(pl.getId()+"-----------------------------ID");
         if (!roomsData.containsKey(roomId)){
             throw new ServicesException("Room "+roomId+" not registered in the server.");
         }
@@ -57,7 +58,12 @@ public class GameServicesStub implements GameServices{
 
     @Override
     public Set<Player> getRegisteredPlayers(int roomId) throws ServicesException {
-        return roomsData.get(roomId);
+        if(!roomsData.containsKey(roomId)){
+            throw new ServicesException("Room "+roomId+" does not exist");
+        }
+        else{
+            return roomsData.get(roomId);
+        }
     }
     
     @Override

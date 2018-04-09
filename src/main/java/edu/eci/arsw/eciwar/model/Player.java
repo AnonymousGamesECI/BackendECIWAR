@@ -9,10 +9,17 @@ package edu.eci.arsw.eciwar.model;
  *
  * @author USER
  */
-public class Player {
+public class Player implements Comparable<Player>{
     private int id;
     private float x, y;
     private float rt;
+    
+    public Player(){
+    }
+    
+    public Player(int id){
+        this.id = id;
+    }
     
     public Player(int id, float x, float y, float rt){
         this.id = id;
@@ -41,5 +48,10 @@ public class Player {
     public String toString(){
         return ('Player{' + ' id=' + this.id +  ', x=' + this.x + ', y=' + this.y + ', rt=' + this.rt + '}');
     }*/
+
+    @Override
+    public int compareTo(Player o) {
+        return o.getId() - this.getId();
+    }
     
 }

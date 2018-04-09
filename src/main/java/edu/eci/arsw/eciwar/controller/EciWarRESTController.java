@@ -62,7 +62,7 @@ public class EciWarRESTController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createNewRoom(@RequestBody Map<String,String> room) {
         try {
-            System.out.println(room);
+            //System.out.println(Integer.parseInt(room.get("id")));
             services.createRoom(Integer.parseInt(room.get("id")));
                     return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (ServicesException ex) {
