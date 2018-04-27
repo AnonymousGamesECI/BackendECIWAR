@@ -7,6 +7,7 @@ package edu.eci.arsw.eciwar.controller;
 
 import edu.eci.arsw.eciwar.model.Bullet;
 import edu.eci.arsw.eciwar.model.Player;
+import edu.eci.arsw.eciwar.model.Prueba;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -29,38 +30,21 @@ public class STOMPMessagesHandler {
     private ConcurrentMap<String,List> players = new ConcurrentHashMap<>();
     
     
-    @MessageMapping("/room.{roomId}/movement")
-    public void handleRoomMovementEvent(@DestinationVariable String roomId) throws Exception {
-        //Falta implementar
+    @MessageMapping("/start.{roomId}")
+    public void handleStartEvent(@DestinationVariable String roomId) throws Exception {
+        msgt.convertAndSend("/room." + roomId + "/start", "Nothing");
     }
     
     
-    @MessageMapping("/room.{roomId}/newshot")
-    public void handleBulletEvent(Bullet bullet, @DestinationVariable String roomId) throws Exception{
-        
+    @MessageMapping("/movement.{roomId}")
+    public void handleMoveEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        msgt.convertAndSend("/room." + roomId + "/movement", player);
     }
     
-    @MessageMapping("/room.{roomId}/newdead")
-    public void handleImpactEvent(Player target,@DestinationVariable String roomId) throws Exception{
-        msgt.convertAndSend("/room."+roomId+"/dead", target);
-        /*
-        System.out.println("Nuevo punto recibido en el servidor!:"+pt);
-                msgt.convertAndSend("/topic/newpoint."+numdibujo, pt);
-                
-                
-                if(vertices.containsKey(numdibujo)){
-                    vertices.get(numdibujo).add(pt);
-                    if(vertices.get(numdibujo).size()>=4){
-                        msgt.convertAndSend("/topic/newpolygon."+numdibujo, vertices.get(numdibujo));
-                        System.out.println("Poligono enviado :"+ vertices.get(numdibujo));
-                        vertices.get(numdibujo).clear();
-                    }
-                }
-                else{
-                    List<Point> puntos= Collections.synchronizedList( new ArrayList<Point>());
-                    puntos.add(pt);
-                    vertices.put(numdibujo, puntos);
-                }*/
+    @MessageMapping("/newshot.{roomId}")
+    public void handleBulletEvent(Bullet bullet,@DestinationVariable String roomId) throws Exception{
+        System.out.println(bullet.getIdShooter()+"------------"+bullet.getPosition().getX()+","+bullet.getPosition().getY()+"------------TX: "+bullet.getTouchLocX()+",TY: "+bullet.getTouchLocY());
+        msgt.convertAndSend("/room." + roomId + "/newshot", bullet);
     }
 }
 
