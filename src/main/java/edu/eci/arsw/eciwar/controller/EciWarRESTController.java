@@ -89,4 +89,20 @@ public class EciWarRESTController {
         }
 
     }
+    
+    
+    @RequestMapping(path = "/{roomId}/players/remove",method = RequestMethod.PUT)
+    public ResponseEntity<?> removePlayer(@PathVariable(name = "roomId") String roomId,@RequestBody Player pl) {
+        try {
+            services.removePlayerFromRoom(Integer.valueOf(roomId), pl);
+                    return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ServicesException ex) {
+            Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(ex.getLocalizedMessage(),HttpStatus.BAD_REQUEST);
+        } catch (NumberFormatException ex){
+            Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("/{roomId}/ must be an integer value.",HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
