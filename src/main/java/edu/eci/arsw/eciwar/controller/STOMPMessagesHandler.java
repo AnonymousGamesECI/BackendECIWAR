@@ -51,6 +51,11 @@ public class STOMPMessagesHandler {
     public void handleDeathEvent(Player player, @DestinationVariable String roomId) throws Exception{
         msgt.convertAndSend("/room." + roomId + "/newdeath", player);
     }
+    
+    @MessageMapping("/winner.{roomId}")
+    public void handleWinnerEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        msgt.convertAndSend("/room." + roomId + "/winner", player);
+    }
 }
 
 
