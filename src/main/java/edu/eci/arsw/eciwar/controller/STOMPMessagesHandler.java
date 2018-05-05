@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -31,14 +32,16 @@ public class STOMPMessagesHandler {
     
     
     @MessageMapping("/start/{roomId}")
-    public void handleStartEvent(@DestinationVariable String roomId) throws Exception {
-        msgt.convertAndSend("/topic/room/" + roomId + "/start", "Nothing");
+    @SendTo("/topic/room-start-{roomId}")
+    public String handleStartEvent(@DestinationVariable("roomId") String roomId) throws Exception {
+        return "Nothing";
     }
     
     
     @MessageMapping("/movement/{roomId}")
-    public void handleMoveEvent(Player player, @DestinationVariable String roomId) throws Exception{
-        msgt.convertAndSend("/topic/room/" + roomId + "/movement", player);
+    @SendTo("/topic/room-movement-{roomId}")
+    public Player handleMoveEvent(Player player, @DestinationVariable("roomId") String roomId) throws Exception{
+        return player;
     }
     
     @MessageMapping("/newshot/{roomId}")
