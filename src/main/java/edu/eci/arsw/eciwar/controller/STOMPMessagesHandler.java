@@ -45,14 +45,15 @@ public class STOMPMessagesHandler {
     }
     
     @MessageMapping("/newshot/{roomId}")
-    public void handleBulletEvent(Bullet bullet,@DestinationVariable String roomId) throws Exception{
-        //System.out.println(bullet.getIdShooter()+"------------"+bullet.getPosition().getX()+","+bullet.getPosition().getY()+"------------TX: "+bullet.getTouchLocX()+",TY: "+bullet.getTouchLocY());
-        msgt.convertAndSend("/topic/room/" + roomId + "/newshot", bullet);
+    @SendTo("/topic/room-newshot-{roomId}")
+    public Bullet handleBulletEvent(Bullet bullet,@DestinationVariable String roomId) throws Exception{
+        return bullet;
     }
     
     @MessageMapping("/newdeath/{roomId}")
-    public void handleDeathEvent(Player player, @DestinationVariable String roomId) throws Exception{
-        msgt.convertAndSend("/topic/room/" + roomId + "/newdeath", player);
+    @SendTo("/topic/room-newdeath-{roomId}")
+    public Player handleDeathEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        return player;
     }
 }
 
