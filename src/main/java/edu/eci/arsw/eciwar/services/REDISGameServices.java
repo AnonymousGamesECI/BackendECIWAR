@@ -61,7 +61,7 @@ public class REDISGameServices implements GameServices{
         if (template.hasKey(actGame)) {
             throw new ServicesException("La sala ya se encuentra creada.");
         } else {
-            template.opsForList().leftPush(actGame, "");
+            template.opsForHash().put(actGame, "", "");
         }
     }
 
