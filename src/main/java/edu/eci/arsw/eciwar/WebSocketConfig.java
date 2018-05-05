@@ -23,7 +23,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableStompBrokerRelay("/room").setRelayHost(host).setRelayPort(port).
+        config.enableStompBrokerRelay("/topic").setRelayHost(host).setRelayPort(port).
                 setClientLogin("tkownfax").
                 setClientPasscode("UJ4YP9jVSniRrhGMVLdMev0EOY6EphFa").
                 setSystemLogin("tkownfax").
