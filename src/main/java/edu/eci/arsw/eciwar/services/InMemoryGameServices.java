@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
  *
  * @author USER
  */
-@Service
-public class GameServicesStub implements GameServices{
+//@Service
+public class InMemoryGameServices implements GameServices{
     private ConcurrentHashMap<Integer, Set<Player>> roomsData;
     
-    public GameServicesStub(){
+    public InMemoryGameServices(){
         roomsData = new ConcurrentHashMap<>();
         //roomsData.put(1, new ConcurrentSkipListSet<>());
     }
