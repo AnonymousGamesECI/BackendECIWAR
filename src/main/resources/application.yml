@@ -1,0 +1,4 @@
+spring:
+    redis:
+        host: ec2-54-148-116-24.us-west-2.compute.amazonaws.com
+        port: 6379
