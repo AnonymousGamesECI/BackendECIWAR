@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.eciwar.services;
+package edu.eci.arsw.eciwar.services.impl;
 
 import edu.eci.arsw.eciwar.model.Player;
+import edu.eci.arsw.eciwar.services.GameServices;
+import edu.eci.arsw.eciwar.services.ServicesException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
