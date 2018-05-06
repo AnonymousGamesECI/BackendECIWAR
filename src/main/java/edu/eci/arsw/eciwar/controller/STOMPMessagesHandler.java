@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -30,32 +31,34 @@ public class STOMPMessagesHandler {
     private ConcurrentMap<String,List> players = new ConcurrentHashMap<>();
     
     
-    @MessageMapping("/start.{roomId}")
-    public void handleStartEvent(@DestinationVariable String roomId) throws Exception {
-        msgt.convertAndSend("/room." + roomId + "/start", "Nothing");
+    @MessageMapping("/start/{roomId}")
+    @SendTo("/topic/room-start-{roomId}")
+    public String handleStartEvent(@DestinationVariable("roomId") String roomId) throws Exception {
+        return "Nothing";
     }
     
     
-    @MessageMapping("/movement.{roomId}")
-    public void handleMoveEvent(Player player, @DestinationVariable String roomId) throws Exception{
-        msgt.convertAndSend("/room." + roomId + "/movement", player);
+    @MessageMapping("/movement/{roomId}")
+    @SendTo("/topic/room-movement-{roomId}")
+    public Player handleMoveEvent(Player player, @DestinationVariable("roomId") String roomId) throws Exception{
+        return player;
     }
     
-    @MessageMapping("/newshot.{roomId}")
-    public void handleBulletEvent(Bullet bullet,@DestinationVariable String roomId) throws Exception{
-        //System.out.println(bullet.getIdShooter()+"------------"+bullet.getPosition().getX()+","+bullet.getPosition().getY()+"------------TX: "+bullet.getTouchLocX()+",TY: "+bullet.getTouchLocY());
-        msgt.convertAndSend("/room." + roomId + "/newshot", bullet);
+    @MessageMapping("/newshot/{roomId}")
+    @SendTo("/topic/room-newshot-{roomId}")
+    public Bullet handleBulletEvent(Bullet bullet,@DestinationVariable String roomId) throws Exception{
+        return bullet;
     }
     
-    @MessageMapping("/newdeath.{roomId}")
-    public void handleDeathEvent(Player player, @DestinationVariable String roomId) throws Exception{
-        msgt.convertAndSend("/room." + roomId + "/newdeath", player);
+    @MessageMapping("/newdeath/{roomId}")
+    @SendTo("/topic/room-newdeath-{roomId}")
+    public Player handleDeathEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        return player;
     }
     
-    @MessageMapping("/winner.{roomId}")
-    public void handleWinnerEvent(Player player, @DestinationVariable String roomId) throws Exception{
-        msgt.convertAndSend("/room." + roomId + "/winner", player);
+    @MessageMapping("/winner/{roomId}")
+    @SendTo("/topic/room-winner-{roomId}")
+    public Player handleWinnerEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        return player;
     }
 }
-
-
