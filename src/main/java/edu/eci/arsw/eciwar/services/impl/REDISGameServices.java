@@ -62,6 +62,7 @@ public class REDISGameServices implements GameServices{
     @Override
     public void createRoom(int roomId) throws ServicesException {
         template.opsForSet().add(String.valueOf(roomId), "");
+        template.opsForSet().remove(String.valueOf(roomId), "");
     }
 
     @Override
