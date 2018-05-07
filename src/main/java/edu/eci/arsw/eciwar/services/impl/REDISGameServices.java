@@ -52,12 +52,11 @@ public class REDISGameServices implements GameServices{
             throw new ServicesException("Room "+roomId+" not registered in the server.");
         } 
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
+        players.remove("");
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
         for(String i: players){
-            if(!i.equals("")){
-                setOfPlayers.add(new Player(Integer.valueOf(i)));
-            }
-            
+            System.out.println(i);
+            setOfPlayers.add(new Player(Integer.valueOf(i)));
         }
         return setOfPlayers;
     }
