@@ -54,7 +54,10 @@ public class REDISGameServices implements GameServices{
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
         for(String i: players){
-            setOfPlayers.add(new Player(Integer.valueOf(i)));
+            if(!i.equals("")){
+                setOfPlayers.add(new Player(Integer.valueOf(i)));
+            }
+            
         }
         return setOfPlayers;
     }
@@ -62,7 +65,6 @@ public class REDISGameServices implements GameServices{
     @Override
     public void createRoom(int roomId) throws ServicesException {
         template.opsForSet().add(String.valueOf(roomId), "");
-        template.opsForSet().remove(String.valueOf(roomId), "");
     }
 
     @Override
