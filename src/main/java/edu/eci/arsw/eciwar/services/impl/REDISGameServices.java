@@ -26,41 +26,36 @@ public class REDISGameServices implements GameServices{
     
     @Override
     public void registerPlayerToRoom(int roomId, Player pl) throws ServicesException {
-        System.out.println("registerPlayerFromRoom: isMemberBeforeAddingPlayer: " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
+        System.out.println(pl.getId() + " registerPlayerToRoom Is Member of the room: " + roomId + "? " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
         template.opsForSet().add(String.valueOf(roomId), String.valueOf(pl.getId()));
-        System.out.println("registerPlayerFromRoom: isMemberAfterAddingPlayer: " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
     }
 
     @Override
     public void removePlayerFromRoom(int roomId, Player pl) throws ServicesException {
-        System.out.println("removePlayerFromRoom: isMemberBeforeRemoving: " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
+        System.out.println(pl.getId() + " removePlayerFromRoom Is Member of the room: " + roomId + "? " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
         template.opsForSet().remove(String.valueOf(roomId), String.valueOf(pl.getId()));
-        System.out.println("removePlayerFromRoom: isMemberAfterRemoving: " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
     }
 
     @Override
     public Set<Player> getRegisteredPlayers(int roomId) throws ServicesException {
+        System.out.println(roomId + " getRegisteredPlayers: Is a key? " + template.hasKey(String.valueOf(roomId)));
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
         for(String i: players){
             setOfPlayers.add(new Player(Integer.valueOf(i)));
-            System.out.println("getRegisteredPlayers: player: " + i);
         }
         return setOfPlayers;
     }
 
     @Override
     public void createRoom(int roomId) throws ServicesException {
-        System.out.println("createRoom: haskeyBeforeAdding: "+ template.hasKey(String.valueOf(roomId)));
         template.opsForSet().add(String.valueOf(roomId), "");
-        System.out.println("createRoom: haskeyAfterAdding: "+ template.hasKey(String.valueOf(roomId)));
     }
 
     @Override
     public void removeRoom(int roomId) throws ServicesException {
-        System.out.println("removeRoom: haskeyBeforeRemoving: "+ template.hasKey(String.valueOf(roomId)));
+        System.out.println(roomId + " removeRoom: Is a key? " + template.hasKey(String.valueOf(roomId)));
         template.delete(String.valueOf(roomId));
-        System.out.println("removeRoom: haskeyAfterRemoving: "+ template.hasKey(String.valueOf(roomId)));
     }
     
 }
