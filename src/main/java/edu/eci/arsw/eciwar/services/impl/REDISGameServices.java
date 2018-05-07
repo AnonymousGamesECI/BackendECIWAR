@@ -26,19 +26,31 @@ public class REDISGameServices implements GameServices{
     
     @Override
     public void registerPlayerToRoom(int roomId, Player pl) throws ServicesException {
-        System.out.println(pl.getId() + " registerPlayerToRoom Is Member of the room: " + roomId + "? " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
+        if(!template.hasKey(String.valueOf(roomId))){
+            throw new ServicesException("Room "+roomId+" not registered in the server.");
+        } 
+        if(template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId()))){
+            throw new ServicesException("Player "+pl.getId()+" is already registered in room "+roomId);
+        }
         template.opsForSet().add(String.valueOf(roomId), String.valueOf(pl.getId()));
     }
 
     @Override
     public void removePlayerFromRoom(int roomId, Player pl) throws ServicesException {
-        System.out.println(pl.getId() + " removePlayerFromRoom Is Member of the room: " + roomId + "? " + template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId())));
+        if(!template.hasKey(String.valueOf(roomId))){
+            throw new ServicesException("Room "+roomId+" not registered in the server.");
+        } 
+        if(!template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId()))){
+            throw new ServicesException("Player "+pl.getId()+" not registered in room "+roomId);
+        }
         template.opsForSet().remove(String.valueOf(roomId), String.valueOf(pl.getId()));
     }
 
     @Override
     public Set<Player> getRegisteredPlayers(int roomId) throws ServicesException {
-        System.out.println(roomId + " getRegisteredPlayers: Is a key? " + template.hasKey(String.valueOf(roomId)));
+        if(!template.hasKey(String.valueOf(roomId))){
+            throw new ServicesException("Room "+roomId+" not registered in the server.");
+        } 
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
         for(String i: players){
@@ -54,7 +66,9 @@ public class REDISGameServices implements GameServices{
 
     @Override
     public void removeRoom(int roomId) throws ServicesException {
-        System.out.println(roomId + " removeRoom: Is a key? " + template.hasKey(String.valueOf(roomId)));
+        if(!template.hasKey(String.valueOf(roomId))){
+            throw new ServicesException("Room "+roomId+" not registered in the server.");
+        } 
         template.delete(String.valueOf(roomId));
     }
     
