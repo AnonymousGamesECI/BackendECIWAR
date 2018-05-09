@@ -45,13 +45,13 @@ public class EciWarRESTController {
      }
     
     @RequestMapping(path = "/{roomId}/players",method = RequestMethod.PUT)
-    public ResponseEntity<?> addPlayer(@PathVariable(name = "roomId") String roomId,@RequestBody Player pl) {
+    public ResponseEntity<?> addPlayer(@PathVariable(name = "roomId") String roomId,@RequestBody Player pl) throws ServicesException {
         try {
             services.registerPlayerToRoom(Integer.parseInt(roomId), pl);
                     return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (ServicesException ex) {
             Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>(ex.getLocalizedMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
         } catch (NumberFormatException ex){
             Logger.getLogger(EciWarRESTController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("/{roomId}/ must be an integer value.",HttpStatus.BAD_REQUEST);

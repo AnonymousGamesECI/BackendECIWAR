@@ -19,42 +19,46 @@ import org.springframework.stereotype.Service;
  * @author monitor
  */
 //@Service
-public class REDISGameServices implements GameServices{
+public class REDISGameServices implements GameServices {
 
     @Autowired
     private StringRedisTemplate template;
-    
+
     @Override
     public void registerPlayerToRoom(int roomId, Player pl) throws ServicesException {
-        if(!template.hasKey(String.valueOf(roomId))){
-            throw new ServicesException("Room "+roomId+" not registered in the server.");
-        } 
-        if(template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId()))){
-            throw new ServicesException("Player "+pl.getId()+" is already registered in room "+roomId);
+        if (!template.hasKey(String.valueOf(roomId))) {
+            throw new ServicesException("Room " + roomId + " not registered in the server.");
+        }
+        if (template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId()))) {
+            throw new ServicesException("Player " + pl.getId() + " is already registered in room " + roomId);
+        }
+
+        if (template.opsForSet().members(String.valueOf(roomId)).size() == 3) {
+            throw new ServicesException("Room " + roomId + " game has already start ");
         }
         template.opsForSet().add(String.valueOf(roomId), String.valueOf(pl.getId()));
     }
 
     @Override
     public void removePlayerFromRoom(int roomId, Player pl) throws ServicesException {
-        if(!template.hasKey(String.valueOf(roomId))){
-            throw new ServicesException("Room "+roomId+" not registered in the server.");
-        } 
-        if(!template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId()))){
-            throw new ServicesException("Player "+pl.getId()+" not registered in room "+roomId);
+        if (!template.hasKey(String.valueOf(roomId))) {
+            throw new ServicesException("Room " + roomId + " not registered in the server.");
+        }
+        if (!template.opsForSet().isMember(String.valueOf(roomId), String.valueOf(pl.getId()))) {
+            throw new ServicesException("Player " + pl.getId() + " not registered in room " + roomId);
         }
         template.opsForSet().remove(String.valueOf(roomId), String.valueOf(pl.getId()));
     }
 
     @Override
     public Set<Player> getRegisteredPlayers(int roomId) throws ServicesException {
-        if(!template.hasKey(String.valueOf(roomId))){
-            throw new ServicesException("Room "+roomId+" not registered in the server.");
-        } 
+        if (!template.hasKey(String.valueOf(roomId))) {
+            throw new ServicesException("Room " + roomId + " not registered in the server.");
+        }
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
         players.remove("");
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
-        for(String i: players){
+        for (String i : players) {
             System.out.println(i);
             setOfPlayers.add(new Player(Integer.valueOf(i)));
         }
@@ -68,10 +72,10 @@ public class REDISGameServices implements GameServices{
 
     @Override
     public void removeRoom(int roomId) throws ServicesException {
-        if(!template.hasKey(String.valueOf(roomId))){
-            throw new ServicesException("Room "+roomId+" not registered in the server.");
-        } 
+        if (!template.hasKey(String.valueOf(roomId))) {
+            throw new ServicesException("Room " + roomId + " not registered in the server.");
+        }
         template.delete(String.valueOf(roomId));
     }
-    
+
 }

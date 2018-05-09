@@ -39,6 +39,9 @@ public class InMemoryGameServices implements GameServices{
                 throw new ServicesException("Player "+pl.getId()+" already registered in room "+roomId);
             }
             else{
+                if(roomsData.get(roomId).size() == 3){
+                    throw new ServicesException("Room " + roomId + " game has already start ");
+                }
                 roomsData.get(roomId).add(pl);
             }
             
