@@ -61,4 +61,10 @@ public class STOMPMessagesHandler {
     public Player handleWinnerEvent(Player player, @DestinationVariable String roomId) throws Exception{
         return player;
     }
+    
+    @MessageMapping("/kill/{roomId}")
+    @SendTo("/topic/room-kill-{roomId}")
+    public Player handleKillEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        return player;
+    }
 }
