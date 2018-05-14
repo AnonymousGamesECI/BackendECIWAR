@@ -30,7 +30,7 @@ public class InMemoryGameServices implements GameServices{
 
     @Override
     public void registerPlayerToRoom(int roomId, Player pl) throws ServicesException {
-        System.out.println(pl.getId()+"-----------------------------ID");
+        System.out.println(pl.getId()+"-----------------------------ID-------------"+pl.getX()+","+pl.getY());
         if (!roomsData.containsKey(roomId)){
             throw new ServicesException("Room "+roomId+" not registered in the server.");
         }
