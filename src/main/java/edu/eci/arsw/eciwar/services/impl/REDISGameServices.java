@@ -52,15 +52,12 @@ public class REDISGameServices implements GameServices {
 
     @Override
     public Set<Player> getRegisteredPlayers(int roomId) throws ServicesException {
-        if(template.hasKey("")){
-            template.delete("");
-        }
         if (!template.hasKey(String.valueOf(roomId))) {
             throw new ServicesException("Room " + roomId + " not registered in the server.");
         }
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
-        players.remove("");
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
+        System.out.println("-------------------------------------");
         for (String i : players) {
             System.out.println(i);
             setOfPlayers.add(new Player(Integer.valueOf(i)));
@@ -70,7 +67,7 @@ public class REDISGameServices implements GameServices {
 
     @Override
     public void createRoom(int roomId) throws ServicesException {
-        template.opsForSet().add(String.valueOf(roomId), "");
+        template.opsForSet().add(String.valueOf(roomId));
     }
 
     @Override
