@@ -52,6 +52,9 @@ public class REDISGameServices implements GameServices {
 
     @Override
     public Set<Player> getRegisteredPlayers(int roomId) throws ServicesException {
+        if(template.hasKey("")){
+            template.delete("");
+        }
         if (!template.hasKey(String.valueOf(roomId))) {
             throw new ServicesException("Room " + roomId + " not registered in the server.");
         }
