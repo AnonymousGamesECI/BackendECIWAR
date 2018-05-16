@@ -55,7 +55,7 @@ public class REDISGameServices implements GameServices {
         if (!template.hasKey(String.valueOf(roomId))) {
             throw new ServicesException("Room " + roomId + " not registered in the server.");
         }
-        template.opsForSet().remove("", null);
+        template.opsForSet().remove(String.valueOf(roomId), "");
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
         System.out.println(players.size());
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
