@@ -33,7 +33,7 @@ public class REDISGameServices implements GameServices {
             throw new ServicesException("Player " + pl.getId() + " is already registered in room " + roomId);
         }
 
-        if (template.opsForSet().members(String.valueOf(roomId)).size() == 3) {
+        if (template.opsForSet().members(String.valueOf(roomId)).size() == 4) {
             throw new ServicesException("Room " + roomId + " game has already start ");
         }
         template.opsForSet().add(String.valueOf(roomId), String.valueOf(pl.getId()));
@@ -67,7 +67,8 @@ public class REDISGameServices implements GameServices {
 
     @Override
     public void createRoom(int roomId) throws ServicesException {
-        template.opsForSet().add(String.valueOf(roomId));
+        template.opsForSet().add(String.valueOf(roomId), "");
+        
     }
 
     @Override
