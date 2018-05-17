@@ -41,30 +41,35 @@ public class STOMPMessagesHandler {
     @MessageMapping("/movement/{roomId}")
     @SendTo("/topic/room-movement-{roomId}")
     public Player handleMoveEvent(Player player, @DestinationVariable("roomId") String roomId) throws Exception{
+        //System.out.println("The server received a new move event: " + player);
         return player;
     }
     
     @MessageMapping("/newshot/{roomId}")
     @SendTo("/topic/room-newshot-{roomId}")
     public Bullet handleBulletEvent(Bullet bullet,@DestinationVariable String roomId) throws Exception{
+        System.out.println("The server received a new bullet event: " + bullet.getIdShooter());
         return bullet;
     }
     
     @MessageMapping("/newdeath/{roomId}")
     @SendTo("/topic/room-newdeath-{roomId}")
     public Player handleDeathEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        System.out.println("The server received a new death event: " + player.getId());
         return player;
     }
     
     @MessageMapping("/winner/{roomId}")
     @SendTo("/topic/room-winner-{roomId}")
     public Player handleWinnerEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        System.out.println("The server received a new winner event: " + player.getId());
         return player;
     }
     
     @MessageMapping("/kill/{roomId}")
     @SendTo("/topic/room-kill-{roomId}")
     public Player handleKillEvent(Player player, @DestinationVariable String roomId) throws Exception{
+        System.out.println("The server received a new kill event: " + player.getId());
         return player;
     }
 }

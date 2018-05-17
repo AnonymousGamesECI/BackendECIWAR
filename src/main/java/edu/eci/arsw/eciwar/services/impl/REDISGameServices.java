@@ -34,7 +34,7 @@ public class REDISGameServices implements GameServices {
             throw new ServicesException("Player " + pl.getId() + " is already registered in room " + roomId);
         }
 
-        if (template.opsForSet().members(String.valueOf(roomId)).size() == 4) {
+        if (template.opsForSet().members(String.valueOf(roomId)).size() == 3) {
             throw new ServicesException("Room " + roomId + " game has already start ");
         }
         template.opsForSet().add(String.valueOf(roomId), String.valueOf(pl.getId()));
@@ -60,17 +60,13 @@ public class REDISGameServices implements GameServices {
         }
         template.opsForSet().remove(String.valueOf(roomId), "");
         Set<String> players = template.opsForSet().members(String.valueOf(roomId));
-        System.out.println(players.size());
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
-        System.out.println("-------------------------------------");
 
         for (String i : players) {
-            System.out.println(i);
             ArrayList<String> pos = new ArrayList();
             for (String positions : template.opsForSet().members("P:"+String.valueOf(i))) {
                 pos.add(positions);
             }
-            System.out.println(pos.get(0));
             setOfPlayers.add(new Player(Integer.valueOf(i), Float.valueOf(pos.get(0)), Float.valueOf(pos.get(1))));
         }
 
