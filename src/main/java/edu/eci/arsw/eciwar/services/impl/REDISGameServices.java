@@ -8,6 +8,7 @@ package edu.eci.arsw.eciwar.services.impl;
 import edu.eci.arsw.eciwar.model.Player;
 import edu.eci.arsw.eciwar.services.GameServices;
 import edu.eci.arsw.eciwar.services.ServicesException;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class REDISGameServices implements GameServices {
             throw new ServicesException("Room " + roomId + " game has already start ");
         }
         template.opsForSet().add(String.valueOf(roomId), String.valueOf(pl.getId()));
+        template.opsForSet().add("P:" + pl.getId(), String.valueOf(pl.getX()), String.valueOf(pl.getY()));
     }
 
     @Override
@@ -48,6 +50,7 @@ public class REDISGameServices implements GameServices {
             throw new ServicesException("Player " + pl.getId() + " not registered in room " + roomId);
         }
         template.opsForSet().remove(String.valueOf(roomId), String.valueOf(pl.getId()));
+        template.opsForSet().remove("P:" + pl.getId(), String.valueOf(pl.getX()), String.valueOf(pl.getY()));
     }
 
     @Override
@@ -60,11 +63,17 @@ public class REDISGameServices implements GameServices {
         System.out.println(players.size());
         Set<Player> setOfPlayers = new ConcurrentSkipListSet();
         System.out.println("-------------------------------------");
-        
+
         for (String i : players) {
             System.out.println(i);
-            setOfPlayers.add(new Player(Integer.valueOf(i)));
+            ArrayList<String> pos = new ArrayList();
+            for (String positions : template.opsForSet().members(String.valueOf(i))) {
+                pos.add(positions);
+            }
+            System.out.println(pos.get(0).substring(2));
+            setOfPlayers.add(new Player(Integer.valueOf(i), pos.get(0).substring(2), pos.get(1).substring(2)));
         }
+
         return setOfPlayers;
     }
 

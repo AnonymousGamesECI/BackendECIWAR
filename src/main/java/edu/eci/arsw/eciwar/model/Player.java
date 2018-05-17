@@ -32,6 +32,10 @@ public class Player implements Comparable<Player> {
         this.position = position;
     }
 
+    public Player(Integer valueOf, String get, String get0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getId() {
         return this.id;
     }
