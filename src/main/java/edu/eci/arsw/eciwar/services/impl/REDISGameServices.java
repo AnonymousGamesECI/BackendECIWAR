@@ -70,7 +70,7 @@ public class REDISGameServices implements GameServices {
             for (String positions : template.opsForSet().members("P:"+String.valueOf(i))) {
                 pos.add(positions);
             }
-            System.out.println(pos.get(0).substring(2));
+            System.out.println(pos.get(0));
             setOfPlayers.add(new Player(Integer.valueOf(i), Float.valueOf(pos.get(0).substring(2)), Float.valueOf(pos.get(1).substring(2))));
         }
 
