@@ -71,7 +71,7 @@ public class REDISGameServices implements GameServices {
                 pos.add(positions);
             }
             System.out.println(pos.get(0).substring(2));
-            setOfPlayers.add(new Player(Integer.valueOf(i), pos.get(0).substring(2), pos.get(1).substring(2)));
+            setOfPlayers.add(new Player(Integer.valueOf(i), Float.valueOf(pos.get(0).substring(2)), Float.valueOf(pos.get(1).substring(2))));
         }
 
         return setOfPlayers;
