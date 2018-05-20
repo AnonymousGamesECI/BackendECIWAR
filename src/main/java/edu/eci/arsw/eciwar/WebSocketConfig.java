@@ -25,11 +25,11 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
         //CloudAmqp
         config.enableStompBrokerRelay("/topic").setRelayHost(host).setRelayPort(port).
-                setClientLogin("tkownfax").
-                setClientPasscode("UJ4YP9jVSniRrhGMVLdMev0EOY6EphFa").
-                setSystemLogin("tkownfax").
-                setSystemPasscode("UJ4YP9jVSniRrhGMVLdMev0EOY6EphFa").
-                setVirtualHost("tkownfax");
+                setClientLogin("yqbofqdf").
+                setClientPasscode("6CMzc5eiNjOdlv9cP9HpqFmHLK3KxUNS").
+                setSystemLogin("yqbofqdf").
+                setSystemPasscode("6CMzc5eiNjOdlv9cP9HpqFmHLK3KxUNS").
+                setVirtualHost("yqbofqdf");
         config.setApplicationDestinationPrefixes("/app");        
     }
 
