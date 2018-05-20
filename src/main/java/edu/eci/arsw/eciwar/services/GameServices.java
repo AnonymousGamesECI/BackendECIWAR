@@ -24,4 +24,6 @@ public interface GameServices {
     public void removeRoom(int roomId) throws ServicesException;
     //public void registerWinner(int racenum,RaceParticipant rp) throws ServicesException;
     //public RaceParticipant getRegisteredWinner(int racenum) throws ServicesException;
+    
+    public int getTotalRooms() throws ServicesException;
 }

@@ -86,4 +86,12 @@ public class REDISGameServices implements GameServices {
         template.delete(String.valueOf(roomId));
     }
 
+    @Override
+    public int getTotalRooms() throws ServicesException {
+        
+        //FALTA IMPLEMENTAR
+        
+        return 1;
+    }
+
 }

@@ -90,5 +90,11 @@ public class InMemoryGameServices implements GameServices{
             roomsData.remove(roomId);
         }
     }
+
+    @Override
+    public int getTotalRooms() throws ServicesException {
+        return roomsData.size();
+        
+    }
     
 }
