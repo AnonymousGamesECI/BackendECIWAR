@@ -94,7 +94,6 @@ public class InMemoryGameServices implements GameServices{
     @Override
     public int getTotalRooms() throws ServicesException {
         return roomsData.size();
-        
     }
     
 }

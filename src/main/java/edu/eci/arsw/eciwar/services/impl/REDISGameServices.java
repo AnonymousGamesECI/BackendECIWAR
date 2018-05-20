@@ -76,6 +76,7 @@ public class REDISGameServices implements GameServices {
     @Override
     public void createRoom(int roomId) throws ServicesException {
         template.opsForSet().add(String.valueOf(roomId), "");
+        template.opsForSet().add("rooms", String.valueOf(roomId));
     }
 
     @Override
@@ -84,14 +85,12 @@ public class REDISGameServices implements GameServices {
             throw new ServicesException("Room " + roomId + " not registered in the server.");
         }
         template.delete(String.valueOf(roomId));
+        template.opsForSet().remove("rooms", String.valueOf(roomId));
     }
 
     @Override
     public int getTotalRooms() throws ServicesException {
-        
-        //FALTA IMPLEMENTAR
-        
-        return 1;
+        return template.opsForSet().members("rooms").size();
     }
 
 }
