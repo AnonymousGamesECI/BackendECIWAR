@@ -24,7 +24,7 @@ ECIWAR es un videojuego multijugador del género top down shooter. Su principal 
 -------
 Para empezar, encontramos el menú de usuario en el cual se puede interactuar para personalizar el nombre de usuario (Nickname) y la sala a la que se quiere acceder
 
-![](img/MenuSS.png)
+![](img/MenuSS.PNG)
 
 Como podemos contemplar hay tes elementos de la UI relevantes en el diseño:
 
@@ -39,19 +39,19 @@ Después de haberse unido a alguna sala hay tres posibles escenarios: cuando est
 
 ### Escenario 1: Sala disponible
 
-![](img/WaitSS.png)
+![](img/WaitSS.PNG)
 
 Tal y como lo indica el mensaje en la UI el usuario debe esperar a que los suficientes jugadores se unan a la partida y de esta manera poder empezar a jugar.
 
 ### Escenario 2: Sala llena
 
-![](img/ErrorSS.png)
+![](img/ErrorSS.PNG)
 
 En este escenario el aplicativo lanza una excepción que desencadena un mensaje de alerta hacia el usuario para impedirle el acceso a la sala.
 
 ### Escenario 3: Comienzo de la partida
 
-![](img/GameSS.png)
+![](img/GameSS.PNG)
 
 Para finalizar, cuando el usuario que accede a la sala es el último en ocupar el puesto en la cola, el juego inicia. En la UI del juego hay componentes que no se deben pasar por alto, aquellos componentes son:
 
