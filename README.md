@@ -79,7 +79,7 @@ Para moverse el usuario debe usar las teclas WASD o las flechas del teclado.
 
 ### Activity Diagram
 
-----------------IMAGEN-----------------
+![](img/Activity Diagram0.png)
 
 
 ### Components Diagram
@@ -91,12 +91,12 @@ Para moverse el usuario debe usar las teclas WASD o las flechas del teclado.
 
 #### Heroku version
 
-----------------IMAGEN-----------------
+![](img/Heroku.png)
 
 
 #### Scalable AWS version
 
-----------------IMAGEN-----------------
+![](img/AWS.png)
 
 
 
